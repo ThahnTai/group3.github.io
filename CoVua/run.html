@@ -1,0 +1,243 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>GAME CỜ VUA</title>
+</head>
+<link rel="icon" href="Icon/icon.png"/>
+<link rel="stylesheet" type="text/css" href="CSS/style.css"/>
+<script type="text/javascript" src="JS/Function.js"></script>
+<script type="text/javascript" src="xac dinh huong/Hau.js"></script>
+<script type="text/javascript" src="xac dinh huong/Ma.js"></script>
+<script type="text/javascript" src="xac dinh huong/Tot.js"></script>
+<script type="text/javascript" src="xac dinh huong/Tuong.js"></script>
+<script type="text/javascript" src="xac dinh huong/Vua.js"></script>
+<script type="text/javascript" src="xac dinh huong/Xe.js"></script>
+<script>
+	// Cờ đỏ đi trước
+	function Click(id){
+		var X = id.charAt(0);
+		var Y = id.charAt(1);
+		isClick = !isClick;
+		if(isClick){
+			if(isCoDo(X, Y) != isQuanDo){
+			isClick = !isClick;
+			return;
+			}	
+		}
+		if(isClick){
+			var Name = GetName(id);
+			Name = Name.substring(0, Name.indexOf('_'));
+			Location = id;
+			
+			// Kiểm tra này là quân cờ nào để xác định đường đi
+			switch(Name){
+				case 'Xe':
+					Xe(id);
+				break;
+				
+				case 'Ma':
+					Ma(id);
+				break;
+				
+				case 'Tuong':
+					Tuong(id);
+				break;
+				
+				case 'Hau':
+					Hau(id);
+				break;
+				
+				case 'Vua':
+					Vua(id);
+				break;
+				
+				case 'Tot':
+					Tot(id);
+				break;
+				
+				default:
+				
+					// Không click vào ổ chức quân cờ nào
+					isClick = !isClick;
+				break;
+			}
+		 }else{
+			 var Name = GetName(id);
+			 Name = Name.substring(0, Name.indexOf('_'));
+			 
+			 if(DiChuyen(Location, id)){
+				 if(isQuanDo){
+					 PointDo += GetDiem(Name);
+					 if(isChieuVua(Name) || PointDo == 880){
+					 	alert("QUÂN ĐỎ ĐÃ CHIẾN THẮNG");
+						KhoiTao();
+					 }
+					 document.getElementById("PointCoDo").innerHTML = "Point: " + PointDo;
+				 }else{
+					 PointDen += GetDiem(Name);
+					 if(isChieuVua(Name) || PointDen == 880){
+					 	alert("QUÂN ĐEN ĐÃ CHIẾN THẮNG");
+						KhoiTao();
+					 }
+					 document.getElementById("PointCoDen").innerHTML = "Point: " + PointDen;
+				 }
+				isQuanDo = !isQuanDo; 
+				LuotDi();
+			 }
+			 VeBanCoTrangDen();
+		 }
+	}
+</script>
+<body>
+<div id="divMain">
+	<div id="NguoiChoiCo">
+      <table id="CoDen">
+        <tr>
+          <td><img id="iCoDen" src="user/Player1.png"></td>
+         </tr>
+    	</table>
+      <table>
+        <img id="vs" src="user/vs.png">
+      </table>
+      <table id="CoDo">
+        <tr>
+          <td><img id="iCoDo" src="user/Player2.png"></td>
+        </tr>
+    	</table>
+    </div>
+
+	<div id="divBanCo">
+        <table id="BanCo">
+            <tr id="text">
+                <th></th>
+                <th>A</th>
+                <th>B</th>
+                <th>C</th>
+                <th>D</th>
+                <th>E</th>
+                <th>F</th>
+                <th>G</th>
+                <th>H</th>
+                <th></th>
+              </tr>
+            <tr>
+              <td rowspan="8" style="border: none;">
+                  <p>8</p><br>
+                  <p>7</p><br>
+                  <p>6</p><br>
+                  <p>5</p><br>
+                  <p>4</p><br>
+                  <p>3</p><br>
+                  <p>2</p><br>
+                  <p>1</p>
+                </td>
+                <td id="11" onclick="Click(this.id)" style="background-color: white;"><img id="i11" src="QuanCo/Xe_Do.png"/></td>
+                <td id="12" onclick="Click(this.id)" style="background-color: cornflowerblue;"><img id="i12" src="QuanCo/Ma_Do.png"/></td>
+                <td id="13" onclick="Click(this.id)" style="background-color: white;"><img id="i13" src="QuanCo/Tuong_Do.png"/></td>
+                <td id="14" onclick="Click(this.id)" style="background-color: cornflowerblue;"><img id="i14" src="QuanCo/Hau_Do.png"/></td>
+                <td id="15" onclick="Click(this.id)" style="background-color: white;"><img id="i15" src="QuanCo/Vua_Do.png"/></td>
+                <td id="16" onclick="Click(this.id)" style="background-color: cornflowerblue;"><img id="i16" src="QuanCo/Tuong_Do.png"/></td>
+                <td id="17" onclick="Click(this.id)" style="background-color: white;"><img id="i17" src="QuanCo/Ma_Do.png"/></td>
+                <td id="18" onclick="Click(this.id)" style="background-color: cornflowerblue;"><img id="i18" src="QuanCo/Xe_Do.png"/></td>                
+                <td rowspan="8" style="border: none;">
+                  <p>8</p><br>
+                  <p>7</p><br>
+                  <p>6</p><br>
+                  <p>5</p><br>
+                  <p>4</p><br>
+                  <p>3</p><br>
+                  <p>2</p><br>
+                  <p>1</p>
+                </td>
+              </tr>
+            <tr>
+              <td id="21" onclick="Click(this.id)" style="background-color: cornflowerblue;"><img id="i21" src="QuanCo/Tot_Do.png"/></td>
+              <td id="22" onclick="Click(this.id)" style="background-color: white;"><img id="i22" src="QuanCo/Tot_Do.png"/></td>
+              <td id="23" onclick="Click(this.id)" style="background-color: cornflowerblue;"><img id="i23" src="QuanCo/Tot_Do.png"/></td>
+              <td id="24" onclick="Click(this.id)" style="background-color: white;"><img id="i24" src="QuanCo/Tot_Do.png"/></td>
+              <td id="25" onclick="Click(this.id)" style="background-color: cornflowerblue;"><img id="i25" src="QuanCo/Tot_Do.png"/></td>
+              <td id="26" onclick="Click(this.id)" style="background-color: white;"><img id="i26" src="QuanCo/Tot_Do.png"/></td>
+              <td id="27" onclick="Click(this.id)" style="background-color: cornflowerblue;"><img id="i27" src="QuanCo/Tot_Do.png"/></td>
+              <td id="28" onclick="Click(this.id)" style="background-color: white;"><img id="i28" src="QuanCo/Tot_Do.png"/></td>              
+            </tr>
+            <tr>
+              <td id="31" onclick="Click(this.id)" style="background-color: white;"><img id="i31" src="QuanCo/Tot_Den.png"/></td>
+              <td id="32" onclick="Click(this.id)" style="background-color: cornflowerblue;"><img id="i32" src="QuanCo/Ma_Den.png"/></td>
+              <td id="33" onclick="Click(this.id)" style="background-color: white;"><img id="i33"/></td>
+              <td id="34" onclick="Click(this.id)" style="background-color: cornflowerblue;"><img id="i34"/></td>
+              <td id="35" onclick="Click(this.id)" style="background-color: white;"><img id="i35"/></td>
+              <td id="36" onclick="Click(this.id)" style="background-color: cornflowerblue;"><img id="i36" src="QuanCo/Tot_Den.png"/></td>
+              <td id="37" onclick="Click(this.id)" style="background-color: white;"><img id="i37"/></td>
+              <td id="38" onclick="Click(this.id)" style="background-color: cornflowerblue;"><img id="i38"/></td>              
+            </tr>
+            <tr>
+              <td id="41" onclick="Click(this.id)" style="background-color: cornflowerblue;"><img id="i41"/></td>
+              <td id="42" onclick="Click(this.id)" style="background-color: white;"><img id="i42"/></td>
+              <td id="43" onclick="Click(this.id)" style="background-color: cornflowerblue;"><img id="i43"/></td>
+              <td id="44" onclick="Click(this.id)" style="background-color: white;"><img id="i44" /></td>
+              <td id="45" onclick="Click(this.id)" style="background-color: cornflowerblue;"><img id="i45" src="QuanCo/Tot_Den.png"/></td>
+              <td id="46" onclick="Click(this.id)" style="background-color: white;"><img id="i46"/></td>
+              <td id="47" onclick="Click(this.id)" style="background-color: cornflowerblue;"><img id="i47" src="QuanCo/Tuong_Den.png"/></td>
+              <td id="48" onclick="Click(this.id)" style="background-color: white;"><img id="i48"/></td>              
+            </tr>
+            <tr>
+              <td id="51" onclick="Click(this.id)" style="background-color: white;"><img id="i51"/></td>
+              <td id="52" onclick="Click(this.id)" style="background-color: cornflowerblue;"><img id="i52"/></td>
+              <td id="53" onclick="Click(this.id)" style="background-color: white;"><img id="i53" src="QuanCo/Tuong_Den.png"/></td>
+              <td id="54" onclick="Click(this.id)" style="background-color: cornflowerblue;"><img id="i54" src="QuanCo/Tot_Den.png"/></td>
+              <td id="55" onclick="Click(this.id)" style="background-color: white;"><img id="i55" /></td>
+              <td id="56" onclick="Click(this.id)" style="background-color: cornflowerblue;"><img id="i56"/></td>
+              <td id="57" onclick="Click(this.id)" style="background-color: white;"><img id="i57"/></td>
+              <td id="58" onclick="Click(this.id)" style="background-color: cornflowerblue;"><img id="i58"/></td>              
+            </tr>
+            <tr>
+              <td id="61" onclick="Click(this.id)" style="background-color: cornflowerblue;"><img id="i61" src="QuanCo/Xe_Den.png"/></td>
+              <td id="62" onclick="Click(this.id)" style="background-color: white;"><img id="i62"/></td>
+              <td id="63" onclick="Click(this.id)" style="background-color: cornflowerblue;"><img id="i63" src="QuanCo/Tot_Den.png"/></td>
+              <td id="64" onclick="Click(this.id)" style="background-color: white;"><img id="i64"/></td>
+              <td id="65" onclick="Click(this.id)" style="background-color: cornflowerblue;"><img id="i65"/></td>
+              <td id="66" onclick="Click(this.id)" style="background-color: white;"><img id="i66" src="QuanCo/Hau_Den.png"/></td>
+              <td id="67" onclick="Click(this.id)" style="background-color: cornflowerblue;"><img id="i67"/></td>
+              <td id="68" onclick="Click(this.id)" style="background-color: white;"><img id="i68"/></td>              
+            </tr>
+            <tr>
+              <td id="71" onclick="Click(this.id)" style="background-color: white;"><img id="i71" /></td>
+              <td id="72" onclick="Click(this.id)" style="background-color: cornflowerblue;"><img id="i72" src="QuanCo/Tot_Den.png"/></td>
+              <td id="73" onclick="Click(this.id)" style="background-color: orange;"><img id="i73" /></td>
+              <td id="74" onclick="Click(this.id)" style="background-color: orange;"><img id="i74" /></td>
+              <td id="75" onclick="Click(this.id)" style="background-color: orange;"><img id="i75" /></td>
+              <td id="76" onclick="Click(this.id)" style="background-color: cornflowerblue;"><img id="i76" /></td>
+              <td id="77" onclick="Click(this.id)" style="background-color: white;"><img id="i77" src="QuanCo/Tot_Den.png"/></td>
+              <td id="78" onclick="Click(this.id)" style="background-color: cornflowerblue;"><img id="i78" src="QuanCo/Tot_Den.png"/></td>              
+            </tr>
+            <tr>
+              <td id="81" onclick="Click(this.id)" style="background-color: cornflowerblue;"><img id="i81" /></td>
+              <td id="82" onclick="Click(this.id)" style="background-color: white;"><img id="i82" /></td>
+              <td id="83" onclick="Click(this.id)" style="background-color: orange;"><img id="i83" /></td>
+              <td id="84" onclick="Click(this.id)" style="background-color: white;"><img id="i84" src="QuanCo/Vua_Den.png"/></td>
+              <td id="85" onclick="Click(this.id)" style="background-color: orange;"><img id="i85" /></td>
+              <td id="86" onclick="Click(this.id)" style="background-color: white;"><img id="i86" /></td>
+              <td id="87" onclick="Click(this.id)" style="background-color: cornflowerblue;"><img id="i87" src="QuanCo/Ma_Den.png"/></td>
+              <td id="88" onclick="Click(this.id)" style="background-color: white;"><img id="i88" src="QuanCo/Xe_Den.png"/></td>              
+            </tr>
+              <tr id="text">
+                <th></th>
+                <th>A</th>
+                <th>B</th>
+                <th>C</th>
+                <th>D</th>
+                <th>E</th>
+                <th>F</th>
+                <th>G</th>
+                <th>H</th>
+                <th></th>
+              </tr>
+        </table>
+    </div>
+		
+</div> 
+
+</body>
+</html>
